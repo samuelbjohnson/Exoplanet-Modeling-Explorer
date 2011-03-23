@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>RV Utils Test</title>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js" djConfig="baseUrl:'./'" type="text/javascript"></script>
+	
+	<script src="./js/science/Utils.js" type="text/javascript"></script>
+	<script src="./js/science/Limits.js" type="text/javascript"></script>
+	<script src="./js/science/Orbels.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		dojo.registerModulePath("org.exoplanets.eme.js.science", "./js/science");
+		//dojo.require("org.exoplanets.eme.js.science.Orbels");
+		//dojo.require("org.exoplanets.eme.js.science.Utils");
+		
+	
+		dojo.addOnLoad(function() {
+			var defaultOrbel, rv, utils;
+			defaultOrbel = new org.exoplanets.eme.js.science.Orbels({e: .3});
+			utils = new org.exoplanets.eme.js.science.Utils();
+			rv = utils.rv_drive(3, [defaultOrbel]);
+			dojo.byId("result").innerHTML = rv;
+		});
+	</script>
+	
+</head>
+<body>
+	<div id="test">
+		<h3>RV Utils Test</h3>
+		<p id="result">
+			
+		</p>
+	</div>
+</body>
+</html>

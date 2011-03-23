@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="rtl">
+    
+    <head>
+	   
+        <style type="text/css">
+          	body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js" // <-- MUST FIX
+        		djConfig="parseOnLoad: true,locale: 'en'">
+        </script>
+
+		<!-- need this to give the slider some color and make it visible -->
+         <link rel="stylesheet" type="text/css" 
+	      href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css"/> 
+
+
+	   <script type="text/javascript">
+
+		// global array holding the graph values
+		var graphValues = [];
+
+		// gV[0] = a, gV[1] = x, etc.. gives them initial values, these will later be set to the defaults for the astro equations
+		function loadGraphValues() { 
+			
+			graphValues[0] = 5;
+			graphValues[1] = 2;
+			graphValues[2] = 6;
+		}
+
+		function printValues() {
+
+			document.write("a: " + graphValues[0] + "<br>");
+			document.write("x: " + graphValues[1] + "<br>");
+			document.write("numPts: " + graphValues[2] + "<br>");
+		}
+
+
+	    // Calculates the values for the equation, returns an array of Y values to form the series
+	    //  y = a * x^2
+		function updateSeries(){
+			
+			var seriesArray = [];
+			// this is just a random equation where i increase x just to test to make sure the updates work.
+			for (i = 0; i < graphValues[2]; i++){
+		    		seriesArray[i] = graphValues[0] * graphValues[1] * graphValues[1];
+		     	graphValues[1]++;
+			}
+
+			// returns the array that forms the y series of the chart
+			return seriesArray;
+		}
+
+	    // graph code
+	   dojo.require("dojox.charting.Chart2D");
+        makeCharts = function() {
+        		var chart1 = new dojox.charting.Chart2D("simplechart");
+
+               chart1.addPlot("default", {
+                    type: "Lines", 
+				markers: true, 
+				tension: 3, 
+				shadows: {dx: 2, dy: 2, dw: 2}
+               });
+               chart1.addAxis("x");
+               chart1.addAxis("y", {
+                   vertical: true
+               });
+			var seriesArray = [];
+			seriesArray = updateSeries();
+
+               chart1.addSeries("Series 1", seriesArray);
+			//chart1.addSeries("Series 2", [3,10,15,20,25]); <-- this works
+               chart1.render();
+         };
+         dojo.addOnLoad(makeCharts);
+		
+           
+	    // slider code
+	    dojo.require("dijit.form.Slider");
+         dojo.require("dijit.form.TextBox"); // makes text input prettier
+         dojo.addOnLoad(function() {
+		    
+		    var slider = new dijit.form.HorizontalSlider({
+		            name: "slider",
+		            value: 5,
+		            minimum: -10,
+		            maximum: 10, 
+		            intermediateChanges: true,
+	                 style: "width:300px;",
+	                 onChange: function(value) {
+						// sets the textbox under the slider to the new value
+		           		dojo.byId("sliderValue").value = value;
+
+						// gets the value of the sliderbox
+						graphValues[0] = value;
+
+						// sends it to the updateSeries function
+						updateSeries();
+		            }
+		     },
+               "slider");
+          });
+        </script>	
+
+    </head>
+    
+    <body class=" nihilo " onload="loadGraphValues()" >
+		
+		<!-- Chart -->
+       	<div id="simplechart" style="width: 200px; height: 500px; margin: 5px auto 0px auto;"> </div>
+		
+		<!-- Slider -->
+		<div id="slider">
+		</div>
+
+		<!-- Slider underneath textbox -->
+          <p>
+           	 <input type="text" id="sliderValue" dojoType="dijit.form.TextBox" />
+          </p>
+
+		<input type="button" value="Show Values" onClick="printValues();">
+     
+    </body>
+
+</html>

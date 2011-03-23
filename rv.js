@@ -167,4 +167,4 @@ Returns the radial velocity of a system with a list of orbital elements 'orbels'
 }
 
 defaultOrbel = newOrbels(10,0,0.3,0,20);
-document.write(rv_drive(3,[defaultOrbel]))
+//document.write(rv_drive(3,[defaultOrbel]))
