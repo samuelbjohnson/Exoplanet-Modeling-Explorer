@@ -38,7 +38,7 @@ dojo.declare("org.exoplanets.eme.js.RvGraph", null, {
 				series = new Array();
 		
 		for (i = this.chartParams.minimum; i < this.chartParams.maximum; i += this.chartParams.increment) {
-			yValue = this.rvUtils.rv_drive(i, orbels);
+			yValue = this.rvUtils.rv_drive(i, [orbels]);
 			series.push({x: i, y: yValue});
 		}
 		return series;

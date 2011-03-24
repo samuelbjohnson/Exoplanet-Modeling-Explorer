@@ -44,7 +44,7 @@ dojo.declare("org.exoplanets.eme.js.science.Utils", null, {
 	},
 	
 	restrict: function(/*array*/ data, /*number*/ lowerEndpoint, /*number*/ upperEndpoint, lims) {
-		var valrange, outputArray;
+		var outputArray, limits;
 		
 		if (! lims) {
 			lims = {};

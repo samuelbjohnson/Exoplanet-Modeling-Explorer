@@ -19,16 +19,17 @@
 	<script src="./js/RvForm.js" type="text/javascript"></script>
 	<script src="./js/RvGraph.js" type="text/javascript"></script>
 	<script src="./js/RvParameter.js" type="text/javascript"></script>
+	<script src="./js/science/Orbels.js" type="text/javascript"></script>
 	
 	<script type="text/javascript">
 		
-		dojo.require("org.exoplanets.eme.js.science.Orbels");
+		//dojo.require("org.exoplanets.eme.js.science.Orbels");
 		dojo.require("org.exoplanets.eme.js.science.Utils");
 		
 		dojo.addOnLoad(function() {
 			var form, graph;
 			form = new org.exoplanets.eme.js.RvForm(dojo.byId("rvDataForm"));
-			graph = new org.exoplanets.eme.js.RvGraph({graphNode: dojo.byId("CurvePlot"), rvForm: form});
+			graph = new org.exoplanets.eme.js.RvGraph({graphNode: dojo.byId("rvCurvePlot"), rvForm: form});
 			
 		});
 	</script>

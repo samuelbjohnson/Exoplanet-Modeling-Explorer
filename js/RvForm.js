@@ -8,7 +8,7 @@ dojo.require("org.exoplanets.eme.js.science.Orbels");
 dojo.declare("org.exoplanets.eme.js.RvForm", null, {
 
 	constructor: function(/*Node*/containerNode) {
-		var orbels = new org.exoplanets.eme.js.science.Orbels(null);
+		this.orbels = new org.exoplanets.eme.js.science.Orbels({});
 		
 		this.getContainerNode = function() {
 			return containerNode;
@@ -18,15 +18,15 @@ dojo.declare("org.exoplanets.eme.js.RvForm", null, {
 			containerNode = newContainer;
 		};
 		
-		this.getOrbels = function() {
-			return orbels;
-		};
-		
-		this.setOrbels = function(newOrbels) {
-			orbels = newOrbels;
-		}
-		
 		this.setupSliders();
+	},
+	
+	getOrbels: function() {
+		return this.orbels;
+	},
+	
+	setOrbels: function(newOrbels) {
+		this.orbels = newOrbels;
 	},
 	
 	setupSliders: function() {
@@ -35,42 +35,49 @@ dojo.declare("org.exoplanets.eme.js.RvForm", null, {
 		s.P = new org.exoplanets.eme.js.RvParameter(dojo.create("div", {}, this.getContainerNode()), {
 			parameterName: "Period",
 			name: "period",
-			minimum: 0,
+			minimum: 0.01,
+			value: 10
 		});
 		
 		s.tp = new org.exoplanets.eme.js.RvParameter(dojo.create("div", {}, this.getContainerNode()), {
 			parameterName: "Time of Periastron",
 			name: "timeOfPeriastron",
+			value: 0
 		});
 		
 		s.e = new org.exoplanets.eme.js.RvParameter(dojo.create("div", {}, this.getContainerNode()), {
 			parameterName: "Eccentricity",
 			name: "eccentricity",
 			minimum: 0,
-			maximum: 1
+			maximum: 1,
+			value: 0
 		});
 		
 		s.om = new org.exoplanets.eme.js.RvParameter(dojo.create("div", {}, this.getContainerNode()), {
 			parameterName: "Omega",
 			name: "omega",
 			minimum: 0,
-			maximum: 360
+			maximum: 360,
+			value: 0
 		});
 		
 		s.k = new org.exoplanets.eme.js.RvParameter(dojo.create("div", {}, this.getContainerNode()), {
 			parameterName: "Radial Velocity Semi-Amplitude",
 			name: "semiAmplitude",
 			minimum: 0,
+			value: 20
 		});
 		
 		s.cmvel = new org.exoplanets.eme.js.RvParameter(dojo.create("div", {}, this.getContainerNode()), {
 			parameterName: "Center of Mass Velocity",
-			name: "cmvel"
+			name: "cmvel",
+			value: 0
 		});
 		
 		s.dvdt = new org.exoplanets.eme.js.RvParameter(dojo.create("div", {}, this.getContainerNode()), {
 			parameterName: "dvdt",
-			name: "dvdt"
+			name: "dvdt",
+			value: 0
 		});
 		
 		this.sliders =  s;
