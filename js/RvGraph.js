@@ -11,7 +11,8 @@ dojo.declare("org.exoplanets.eme.js.RvGraph", null, {
 		The input object must define the following parameters:
 		
 		graphNode: an dom node that will contain the plot,
-		rvForm: an org.exoplanets.eme.rvForm object
+		rvForm: an org.exoplanets.eme.js.rvForm object,
+		starForm: an org.exoplanets.eme.js.StarForm object
 	*/
 	constructor: function(args) {
 		console.log("graph constructor");
@@ -21,6 +22,8 @@ dojo.declare("org.exoplanets.eme.js.RvGraph", null, {
 		
 		this.form = args.rvForm;
 		this.rvUtils = new org.exoplanets.eme.js.science.Utils();
+		
+		this.starData = args.starForm;
 		
 		this.chartParams = {
 			minimum: -10,
@@ -44,12 +47,29 @@ dojo.declare("org.exoplanets.eme.js.RvGraph", null, {
 		return series;
 	},
 	
+	plotObservations: function() {
+		var series, min, max;
+		
+		min = this.starData.getMinObservation();
+		max = this.starData.getMaxObservation();
+		this.chartParams = {
+			minimum: min,
+			maximum: max,
+			increment: (max - min) / 100
+		};
+		series = this.starData.getSeries();
+		this.chart.addSeries("observations", series, {plot: "observations"});
+		this.updateChart();
+	},
+	
 	buildChart: function() {
 		var series;
 		this.chart = new dojox.charting.Chart2D(this.graphNode);
 		
 		series = this.generateSeries();
+		this.chart.addPlot("observations", {type: "MarkersOnly", lines: false, areas: false, markers: true});
 		this.chart.addPlot("default", {type: "Lines"});
+		
 		this.chart.addAxis("x");
 		this.chart.addAxis("y", {vertical: true});
 		
@@ -70,6 +90,7 @@ dojo.declare("org.exoplanets.eme.js.RvGraph", null, {
 	
 	connectEvents: function() {
 		dojo.connect(this.form, "updateComplete", this, this.updateChart);
+		dojo.connect(this.starData, "updateComplete", this, this.plotObservations);
 	}
 		
 

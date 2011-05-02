@@ -1,6 +1,6 @@
 /*License information needs to go here*/
 
-//dojo.provide("org.exoplanets.eme.js.RvForm");
+dojo.provide("org.exoplanets.eme.js.RvForm");
 
 dojo.require("org.exoplanets.eme.js.RvParameter");
 dojo.require("org.exoplanets.eme.js.science.Orbels");
